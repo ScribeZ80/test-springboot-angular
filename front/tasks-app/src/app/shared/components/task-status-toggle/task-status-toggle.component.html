@@ -1,0 +1,13 @@
+<button
+  class="btn-modern status-toggle-btn"
+  [class.completed]="isCompleted()"
+  [class.updating]="isUpdating()"
+  (click)="onToggle()"
+  [disabled]="isUpdating()"
+  [attr.aria-label]="getAriaLabel()"
+>
+  <span class="btn-text">
+    {{ isCompleted() ? 'Marquer comme en cours' : 'Marquer comme terminée' }}
+  </span>
+  <span *ngIf="isUpdating()" class="loading-dot"></span>
+</button> 

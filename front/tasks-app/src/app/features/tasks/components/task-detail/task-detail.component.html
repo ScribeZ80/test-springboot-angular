@@ -1,0 +1,88 @@
+<div class="container fade-in">
+  <!-- Header Section -->
+  <header class="glass-card header-section">
+    <div class="header-content">
+      <h1 class="page-title">
+        <span class="title-icon">📝</span>
+        Détail de la Tâche
+      </h1>
+      <button class="btn-modern back-btn" routerLink="/">
+        ← Retour à la liste
+      </button>
+    </div>
+  </header>
+
+  <!-- Task Detail Section -->
+  <section *ngIf="task(); else loading" class="task-detail-section">
+    <div class="task-detail-card glass-card">
+      <div class="task-header">
+        <div class="task-status-section">
+          <div class="task-status-badge" [class.completed]="task()?.completed">
+            {{ task()?.completed ? '✅ Terminée' : '⏳ En cours' }}
+          </div>
+        </div>
+        <div class="task-id">
+          ID: #{{ task()?.id }}
+        </div>
+      </div>
+
+      <div class="task-content">
+        <div class="task-field">
+          <label class="field-label">
+            <span class="field-icon">📋</span>
+            Libellé
+          </label>
+          <h2 class="task-title">{{ task()?.label }}</h2>
+        </div>
+
+        <div class="task-field" *ngIf="task()?.description">
+          <label class="field-label">
+            <span class="field-icon">📄</span>
+            Description
+          </label>
+          <p class="task-description">{{ task()?.description }}</p>
+        </div>
+
+        <div class="task-field">
+          <label class="field-label">
+            <span class="field-icon">📅</span>
+            Statut
+          </label>
+          <div class="status-info">
+            <span class="status-text" [class.completed]="task()?.completed">
+              {{ task()?.completed ? 'Cette tâche a été marquée comme terminée' : 'Cette tâche est actuellement en cours' }}
+            </span>
+            <app-task-status-toggle
+              [isCompleted]="task()?.completed || false"
+              [isUpdating]="isUpdating()"
+              size="large"
+              (statusChange)="toggleStatus($event)"
+            ></app-task-status-toggle>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <ng-template #loading>
+    <div class="loading-section glass-card">
+      <div class="loading-spinner"></div>
+      <p class="loading-text">Chargement du détail de la tâche...</p>
+    </div>
+  </ng-template>
+
+  <!-- Error Section -->
+  <section *ngIf="!task() && !isLoading()" class="error-section glass-card">
+    <div class="error-content">
+      <div class="error-icon">❌</div>
+      <h2 class="error-title">Tâche non trouvée</h2>
+      <p class="error-message">
+        La tâche que vous recherchez n'existe pas ou a été supprimée.
+      </p>
+      <button class="btn-modern" routerLink="/">
+        Retour à la liste
+      </button>
+    </div>
+  </section>
+</div> 

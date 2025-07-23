@@ -1,0 +1,96 @@
+.status-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-family-body);
+  font-weight: 600;
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 0.875rem;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  text-decoration: none;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 100%);
+  color: var(--color-primary-text);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.status-toggle-btn:hover:not(:disabled) {
+  box-shadow: var(--shadow-md);
+  background: linear-gradient(135deg, var(--color-primary-hover) 0%, var(--color-primary-active) 100%);
+}
+
+.status-toggle-btn:active:not(:disabled) {
+  box-shadow: var(--shadow-sm);
+}
+
+.status-toggle-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.status-toggle-btn.completed {
+  background: linear-gradient(135deg, var(--color-success) 0%, #66BB6A 100%);
+}
+
+.status-toggle-btn.completed:hover:not(:disabled) {
+  background: linear-gradient(135deg, #66BB6A 0%, #81C784 100%);
+}
+
+.btn-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.btn-text {
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+.loading-dot {
+  width: 6px;
+  height: 6px;
+  background: currentColor;
+  border-radius: 50%;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+/* Variantes de taille */
+.status-toggle-btn.small {
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+}
+
+.status-toggle-btn.small .btn-text {
+  font-size: 0.625rem;
+}
+
+.status-toggle-btn.large {
+  padding: 1rem 2rem;
+  font-size: 1rem;
+}
+
+.status-toggle-btn.large .btn-text {
+  font-size: 0.875rem;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .status-toggle-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.75rem;
+  }
+
+  .btn-text {
+    font-size: 0.625rem;
+  }
+} 

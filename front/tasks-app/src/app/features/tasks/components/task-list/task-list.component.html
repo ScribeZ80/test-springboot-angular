@@ -1,0 +1,113 @@
+<div class="container fade-in">
+  <!-- Header Section -->
+  <header class="glass-card header-section">
+    <h1 class="page-title">
+      <span class="title-icon">📋</span>
+      Gestion des Tâches
+    </h1>
+    <p class="page-subtitle">Organisez et suivez vos tâches avec style</p>
+  </header>
+
+  <!-- Add Task Section -->
+  <app-add-task (taskCreated)="onTaskCreated()"></app-add-task>
+
+  <!-- Filter Section -->
+  <section class="glass-card filter-section">
+    <div class="filter-container">
+      <label for="status-filter" class="filter-label">
+        <span class="filter-icon">🔍</span>
+        Filtrer par statut
+      </label>
+      <select
+        id="status-filter"
+        (change)="onStatusChange($event)"
+        class="modern-select"
+        [value]="currentStatus()"
+      >
+        <option value="all">Toutes les tâches</option>
+        <option value="completed">Tâches terminées</option>
+        <option value="pending">Tâches en cours</option>
+      </select>
+    </div>
+  </section>
+
+  <!-- Tasks List Section -->
+  <section class="tasks-section">
+    <div *ngIf="tasks().length; else loading" class="tasks-grid">
+      <div
+        *ngFor="let task of tasks(); trackBy: trackById"
+        class="task-card glass-card"
+        [class.completed]="task.completed"
+      >
+        <div class="task-header">
+          <div class="task-status-badge" [class.completed]="task.completed">
+            {{ task.completed ? '✅ Terminée' : '⏳ En cours' }}
+          </div>
+          <div class="task-id">
+            ID: #{{ task.id }}
+          </div>
+        </div>
+
+        <div class="task-content">
+          <h3 class="task-title">
+            <a [routerLink]="['/', task.id]" class="task-link">
+              {{ task.label }}
+            </a>
+          </h3>
+          <p class="task-description" *ngIf="task.description">
+            {{ task.description }}
+          </p>
+        </div>
+
+        <div class="task-actions">
+          <app-task-status-toggle
+            [isCompleted]="task.completed"
+            [isUpdating]="isUpdating(task.id)"
+            size="small"
+            (statusChange)="toggleStatus(task, $event)"
+          ></app-task-status-toggle>
+
+          <button
+            class="btn-modern view-btn"
+            [routerLink]="['/', task.id]"
+          >
+            Voir détails
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #loading>
+      <div class="loading-section glass-card">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">Chargement des tâches...</p>
+      </div>
+    </ng-template>
+  </section>
+
+  <!-- Pagination Section -->
+  <section *ngIf="pageInfo() as info" class="pagination-section glass-card">
+    <div class="pagination-container">
+      <button
+        class="btn-modern pagination-btn"
+        (click)="prevPage()"
+        [disabled]="!info.hasPrevious"
+      >
+        ← Précédent
+      </button>
+
+      <div class="page-info">
+        <span class="page-text">Page {{ info.pageNumber + 1 }} sur {{ info.totalPages }}</span>
+        <span class="total-text">{{ info.totalElements }} tâche(s) au total</span>
+      </div>
+
+      <button
+        class="btn-modern pagination-btn"
+        (click)="nextPage()"
+        [disabled]="!info.hasNext"
+      >
+        Suivant →
+      </button>
+    </div>
+  </section>
+</div> 

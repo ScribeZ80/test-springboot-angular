@@ -1,0 +1,21 @@
+<section class="glass-card add-task-section">
+  <form (ngSubmit)="onSubmit()" #form="ngForm" class="add-task-form">
+    <h2 class="add-task-title">Ajouter une nouvelle tâche</h2>
+    <div class="form-group">
+      <label for="label" class="form-label">Libellé</label>
+      <input id="label" name="label" [(ngModel)]="label" required maxlength="100" placeholder="Titre de la tâche" [disabled]="loading()" class="form-input" />
+    </div>
+    <div class="form-group">
+      <label for="description" class="form-label">Description</label>
+      <textarea id="description" name="description" [(ngModel)]="description" required maxlength="500" placeholder="Description détaillée" [disabled]="loading()" class="form-input"></textarea>
+    </div>
+    <div class="form-actions">
+      <button type="submit" class="btn-primary" [disabled]="loading() || !form.valid">
+        <span *ngIf="!loading(); else loadingTpl">Ajouter</span>
+        <ng-template #loadingTpl>
+          <span class="loader"></span> Ajout...
+        </ng-template>
+      </button>
+    </div>
+  </form>
+</section> 
